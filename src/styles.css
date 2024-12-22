@@ -29,12 +29,33 @@ body.dark {
   display: flex;
   flex-direction: column;
   align-items: center;
+  position: relative;
   transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 .container.dark {
-  background-color: #333; /* Dark mode for the container */
+  background-color: #333;
   color: #e0e0e0;
+}
+
+/* Dark Mode Button */
+.toggle-dark-mode-btn {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+  transition: transform 0.2s ease;
+}
+
+.toggle-dark-mode-btn:hover {
+  transform: scale(1.2);
+}
+
+.toggle-dark-mode-btn:focus {
+  outline: none;
 }
 
 /* Header */
@@ -78,12 +99,11 @@ h1 {
   border: 1px solid #666;
 }
 
-/* Input Buttons */
 .input-container button {
   padding: 10px 15px;
   border: none;
   background-color: #007bff;
-  color: white; /* Default text color */
+  color: white;
   border-radius: 5px;
   font-size: 1rem;
   cursor: pointer;
@@ -91,8 +111,8 @@ h1 {
 }
 
 .input-container button.dark {
-  background-color: #0056b3; /* Darker blue for dark mode */
-  color: #ffffff; /* Bright white text for better contrast */
+  background-color: #0056b3;
+  color: #ffffff;
 }
 
 .input-container button:hover {
@@ -115,7 +135,7 @@ h1 {
   border: none;
   padding: 10px 15px;
   background-color: #e0e0e0;
-  color: #333; /* Default text color */
+  color: #333;
   border-radius: 5px;
   font-size: 0.9rem;
   cursor: pointer;
@@ -123,8 +143,8 @@ h1 {
 }
 
 .filter-container button.dark {
-  background-color: #444; /* Darker gray for dark mode */
-  color: #ffffff; /* Bright white text for dark mode */
+  background-color: #444;
+  color: #ffffff;
 }
 
 .filter-container button.active {
@@ -150,8 +170,8 @@ h1 {
 
 .task {
   display: flex;
-  justify-content: space-between;
   align-items: center;
+  justify-content: space-between;
   padding: 15px;
   margin-bottom: 10px;
   border-radius: 8px;
@@ -159,71 +179,86 @@ h1 {
   transition: transform 0.2s ease, box-shadow 0.3s ease, background-color 0.3s ease, color 0.3s ease;
 }
 
+/* Task Checkbox */
+.task-checkbox-container {
+  flex: 0 0 auto;
+  margin-right: 10px;
+}
+
+.task-checkbox {
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+  accent-color: #007bff; /* Blue color for the checkbox */
+}
+
+.task.completed .task-checkbox {
+  accent-color: #28a745; /* Green color for completed tasks */
+}
+
 /* Task Text */
 .task-text {
-  flex: 0 0 50%; 
-  word-wrap: break-word; 
+  flex: 1;
+  text-align: left;
+  word-wrap: break-word;
   overflow-wrap: break-word;
-  word-break: break-word; 
-  text-align: left; 
 }
 
 /* Importance Label */
 .importance-label {
   display: inline-block;
-  width: 150px; 
-  text-align: left; 
+  width: 150px;
+  text-align: left;
   font-size: 0.9rem;
   font-weight: bold;
   color: #555;
   margin-left: 10px;
 }
 
-/* Importance Label in Dark Mode */
 body.dark .importance-label {
-  color: #e0e0e0; /* Bright white text for dark mode */
+  color: #e0e0e0;
 }
 
 /* Importance Levels */
 .task.not-important {
-  background-color: #cce7ff; /* Light blue */
+  background-color: #cce7ff;
 }
 
 .task.slightly-important {
-  background-color: #b3e5fc; /* Light teal */
+  background-color: #b3e5fc;
 }
 
 .task.important {
-  background-color: #ffeeba; /* Light yellow */
+  background-color: #ffeeba;
 }
 
 .task.very-important {
-  background-color: #ffcc80; /* Light orange */
+  background-color: #ffcc80;
 }
 
 .task.extremely-important {
-  background-color: #ff9999; /* Light red */
+  background-color: #ff9999;
 }
 
 /* Importance Levels in Dark Mode */
 body.dark .task.not-important {
-  background-color: #5c7a99; /* Darker blue for dark mode */
+  background-color: #5c7a99;
 }
 
 body.dark .task.slightly-important {
-  background-color: #50797d; /* Darker teal */
+  background-color: #50797d;
 }
 
 body.dark .task.important {
-  background-color: #665c44; /* Dark yellow */
+  background-color: #665c44;
 }
 
 body.dark .task.very-important {
-  background-color: #805f3f; /* Dark orange */
+  background-color: #805f3f;
 }
 
 body.dark .task.extremely-important {
-  background-color: #8a4c4c; /* Dark red */
+  background-color: #8a4c4c;
 }
 
 /* Task Buttons */
@@ -239,26 +274,4 @@ body.dark .task.extremely-important {
 
 .task button:hover {
   background-color: #cc0000;
-}
-
-/* Toggle Dark Mode Button */
-.toggle-dark-mode-btn {
-  display: block;
-  margin: 0 auto 1.5rem;
-  background: #007bff;
-  color: white;
-  padding: 10px 20px;
-  border-radius: 5px;
-  font-size: 1rem;
-  cursor: pointer;
-  transition: background-color 0.3s ease, transform 0.2s ease;
-}
-
-.toggle-dark-mode-btn.dark {
-  background: #444; /* Dark background for dark mode */
-  color: #ffffff; /* White text for better visibility */
-}
-
-.toggle-dark-mode-btn:hover {
-  background-color: #0056b3;
 }

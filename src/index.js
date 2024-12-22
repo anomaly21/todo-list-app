@@ -6,8 +6,8 @@ const ToDoApp = () => {
   const [tasks, setTasks] = useState([]);
   const [task, setTask] = useState("");
   const [importance, setImportance] = useState("Not Important");
-  const [filter, setFilter] = useState("pending"); // Default to pending tasks
-  const [sortOrder, setSortOrder] = useState("asc"); // Default to ascending order
+  const [filter, setFilter] = useState("pending");
+  const [sortOrder, setSortOrder] = useState("asc");
   const [isDarkMode, setIsDarkMode] = useState(false);
 
   const importanceLevels = [
@@ -38,7 +38,7 @@ const ToDoApp = () => {
     setTasks([
       ...tasks,
       {
-        id: Date.now(), // Unique identifier
+        id: Date.now(),
         text: task,
         completed: false,
         importance,
@@ -148,18 +148,15 @@ const ToDoApp = () => {
               isDarkMode ? "dark" : ""
             } ${task.importance.toLowerCase().replace(" ", "-")}`}
           >
-            {/* Task Text */}
-            <div
-              className="task-text"
-              onClick={() => toggleTaskCompletion(task.id)}
-            >
-              {task.completed ? <s>{task.text}</s> : task.text}
+            <div className="task-checkbox-container">
+              <input
+                type="checkbox"
+                checked={task.completed}
+                onChange={() => toggleTaskCompletion(task.id)}
+                className="task-checkbox"
+              />
             </div>
-
-            {/* Spacer */}
-            <div className="spacer"></div>
-
-            {/* Importance Label and Delete Button */}
+            <div className="task-text">{task.text}</div>
             <div className="importance-delete-container">
               <div className="importance-label">{task.importance}</div>
               <button onClick={() => deleteTask(task.id)}>Delete</button>
