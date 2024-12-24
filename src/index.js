@@ -9,6 +9,7 @@ const ToDoApp = () => {
   const [filter, setFilter] = useState("pending");
   const [sortOrder, setSortOrder] = useState("asc");
   const [isDarkMode, setIsDarkMode] = useState(false);
+  const [showConfirmModal, setShowConfirmModal] = useState(false);
 
   const importanceLevels = [
     "Not Important",
@@ -61,10 +62,17 @@ const ToDoApp = () => {
     setTasks((prevTasks) => prevTasks.filter((task) => task.id !== id));
   };
 
+  const confirmClearAll = () => {
+    setShowConfirmModal(true);
+  };
+
   const clearAllTasks = () => {
-    if (window.confirm("Are you sure you want to clear all tasks?")) {
-      setTasks([]);
-    }
+    setTasks([]);
+    setShowConfirmModal(false);
+  };
+
+  const cancelClearAll = () => {
+    setShowConfirmModal(false);
   };
 
   const getFilteredTasks = () => {
@@ -99,25 +107,18 @@ const ToDoApp = () => {
     document.body.classList.toggle("dark", !isDarkMode);
   };
 
-  const handleKeyDown = (e) => {
-    if (e.key === "Enter") {
-      addTask();
-    }
-  };
-
   return (
     <div className={`container ${isDarkMode ? "dark" : ""}`}>
-      <button onClick={toggleDarkMode} className="toggle-dark-mode-btn">
-        {isDarkMode ? "☀️" : "🌙"}
-      </button>
       <h1>To-Do List</h1>
+      <button onClick={toggleDarkMode} className="toggle-dark-mode-btn">
+        {isDarkMode ? "🌙" : "☀️"}
+      </button>
       <div className="input-container">
         <input
           type="text"
           placeholder="Enter a task"
           value={task}
           onChange={(e) => setTask(e.target.value)}
-          onKeyDown={handleKeyDown}
         />
         <select
           value={importance}
@@ -130,7 +131,7 @@ const ToDoApp = () => {
           ))}
         </select>
         <button onClick={addTask}>Add</button>
-        <button onClick={clearAllTasks}>Clear All</button>
+        <button onClick={confirmClearAll}>Clear All</button>
       </div>
       <div className="filter-container">
         <button onClick={toggleFilter}>
@@ -153,17 +154,26 @@ const ToDoApp = () => {
                 type="checkbox"
                 checked={task.completed}
                 onChange={() => toggleTaskCompletion(task.id)}
-                className="task-checkbox"
               />
             </div>
             <div className="task-text">{task.text}</div>
-            <div className="importance-delete-container">
-              <div className="importance-label">{task.importance}</div>
-              <button onClick={() => deleteTask(task.id)}>Delete</button>
-            </div>
+            <div className="importance-label">{task.importance}</div>
+            <button onClick={() => deleteTask(task.id)}>Delete</button>
           </li>
         ))}
       </ul>
+
+      {showConfirmModal && (
+        <div className="modal-overlay">
+          <div className="modal">
+            <p>Are you sure you want to clear all tasks?</p>
+            <div className="modal-buttons">
+              <button onClick={clearAllTasks}>Yes</button>
+              <button onClick={cancelClearAll}>Cancel</button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

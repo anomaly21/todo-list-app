@@ -14,28 +14,27 @@ body {
 }
 
 body.dark {
-  background-color: #121212; /* Full-page dark mode background */
-  color: #e0e0e0; /* Light text color for dark mode */
+  background-color: #121212;
+  color: #e0e0e0;
 }
 
 /* App Container */
 .container {
   width: 90%;
   max-width: 600px;
+  height: 90vh;
   padding: 2rem;
   background-color: white;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
   border-radius: 10px;
+  position: relative;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
   display: flex;
   flex-direction: column;
-  align-items: center;
-  position: relative;
-  transition: background-color 0.3s ease, color 0.3s ease;
+  overflow: hidden;
 }
 
 .container.dark {
   background-color: #333;
-  color: #e0e0e0;
 }
 
 /* Dark Mode Button */
@@ -52,10 +51,6 @@ body.dark {
 
 .toggle-dark-mode-btn:hover {
   transform: scale(1.2);
-}
-
-.toggle-dark-mode-btn:focus {
-  outline: none;
 }
 
 /* Header */
@@ -166,39 +161,61 @@ h1 {
   padding: 0;
   margin: 0;
   width: 100%;
+  flex-grow: 1;
+  overflow-y: auto;
+  overflow-x: hidden;
+  scrollbar-width: thin;
+  scrollbar-color: #007bff #f9f9f9;
 }
 
+.task-list::-webkit-scrollbar {
+  width: 8px;
+}
+
+.task-list::-webkit-scrollbar-thumb {
+  background-color: #007bff;
+  border-radius: 4px;
+}
+
+.task-list::-webkit-scrollbar-track {
+  background-color: #f9f9f9;
+}
+
+/* Task */
 .task {
   display: flex;
   align-items: center;
-  justify-content: space-between;
   padding: 15px;
   margin-bottom: 10px;
   border-radius: 8px;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  background-color: #ffffff;
   transition: transform 0.2s ease, box-shadow 0.3s ease, background-color 0.3s ease, color 0.3s ease;
 }
 
 /* Task Checkbox */
 .task-checkbox-container {
-  flex: 0 0 auto;
-  margin-right: 10px;
+  flex: 0 0 5%;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-.task-checkbox {
-  width: 20px;
-  height: 20px;
+.task-checkbox-container input[type="checkbox"] {
+  width: 18px;
+  height: 18px;
   cursor: pointer;
-  accent-color: #007bff; /* Blue color for the checkbox */
+  accent-color: #007bff;
 }
 
-.task.completed .task-checkbox {
-  accent-color: #28a745; /* Green color for completed tasks */
+.task-checkbox-container input[type="checkbox"]:hover {
+  transform: scale(1.1);
 }
 
 /* Task Text */
 .task-text {
-  flex: 1;
+  flex: 0 0 50%;
   text-align: left;
   word-wrap: break-word;
   overflow-wrap: break-word;
@@ -206,20 +223,31 @@ h1 {
 
 /* Importance Label */
 .importance-label {
-  display: inline-block;
-  width: 150px;
-  text-align: left;
+  flex: 0 0 25%;
+  text-align: right;
   font-size: 0.9rem;
   font-weight: bold;
   color: #555;
-  margin-left: 10px;
 }
 
-body.dark .importance-label {
-  color: #e0e0e0;
+/* Delete Button */
+.task button {
+  flex: 0 0 auto;
+  margin-left: auto;
+  border: none;
+  background-color: #ff4d4d;
+  color: white;
+  border-radius: 5px;
+  padding: 8px 12px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
 }
 
-/* Importance Levels */
+.task button:hover {
+  background-color: #cc0000;
+}
+
+/* Task Color Coding */
 .task.not-important {
   background-color: #cce7ff;
 }
@@ -240,7 +268,6 @@ body.dark .importance-label {
   background-color: #ff9999;
 }
 
-/* Importance Levels in Dark Mode */
 body.dark .task.not-important {
   background-color: #5c7a99;
 }
@@ -261,17 +288,58 @@ body.dark .task.extremely-important {
   background-color: #8a4c4c;
 }
 
-/* Task Buttons */
-.task button {
+/* Modal Styles */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.modal {
+  background: white;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  text-align: center;
+  width: 300px;
+}
+
+.modal-buttons {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  margin-top: 15px;
+}
+
+.modal-buttons button {
+  padding: 10px 20px;
   border: none;
-  background-color: #ff4d4d;
-  color: white;
   border-radius: 5px;
-  padding: 8px 12px;
   cursor: pointer;
   transition: background-color 0.3s ease;
 }
 
-.task button:hover {
-  background-color: #cc0000;
+.modal-buttons button:first-child {
+  background-color: #007bff;
+  color: white;
+}
+
+.modal-buttons button:first-child:hover {
+  background-color: #0056b3;
+}
+
+.modal-buttons button:last-child {
+  background-color: #e0e0e0;
+  color: #333;
+}
+
+.modal-buttons button:last-child:hover {
+  background-color: #c6c6c6;
 }
